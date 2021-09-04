@@ -3,17 +3,6 @@
 ## User Registration, User Login and Authorization process.
 The diagram shows flow of how we implement User Registration, User Login and Authorization process.
 
-![jwt-token-authentication-node-js-example-flow](jwt-token-authentication-node-js-example-flow.png)
-
-For more detail, please visit:
-> [Node.js + MongoDB: User Authentication & Authorization with JWT](https://bezkoder.com/node-js-mongodb-auth-jwt/)
-
-You may need to implement Refresh Token:
-
-![jwt-refresh-token-node-js-example-flow](jwt-refresh-token-node-js-example-flow.png)
-
-> [Node.js JWT Refresh Token with MongoDB example](https://bezkoder.com/jwt-refresh-token-node-js-mongodb/)
-
 Working with Front-end:
 > [Vue.js JWT Authentication with Vuex and Vue Router](https://bezkoder.com/jwt-vue-vuex-authentication/)
 
@@ -30,7 +19,6 @@ Working with Front-end:
 ## More Practice:
 > [Node.js, Express & MongoDb: Build a CRUD Rest Api example](https://bezkoder.com/node-express-mongodb-crud-rest-api/)
 
-> [Server side Pagination in Node.js with MongoDB and Mongoose](https://bezkoder.com/node-js-mongodb-pagination/)
 
 Associations:
 > [MongoDB One-to-One relationship tutorial with Mongoose examples](https://bezkoder.com/mongoose-one-to-one-relationship-example/)
