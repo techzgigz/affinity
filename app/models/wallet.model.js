@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const Wallet = mongoose.model(
-  "wallet",
+  "Wallet",
   new mongoose.Schema({
     did: String,
     userid:String
