@@ -40,6 +40,29 @@ app.get("/", async (req, res) => {
 
   res.json({ message: "Welcome to Affinity application." });
 });
+
+// Creating a function to encrypt string
+function encryptString (plaintext, publicKeyFile) {
+  const publicKey = fs.readFileSync(publicKeyFile, "utf8");
+
+  // publicEncrypt() method with its parameters
+  const encrypted = crypto.publicEncrypt(
+       publicKey, Buffer.from(plaintext));
+  return encrypted.toString("base64");
+}
+
+//encryptString()
+const plainText = "{GfG}";
+  
+// Defining encrypted text
+const encrypted = encryptString(plainText, "publics");
+  
+// Prints plain text
+console.log("Plaintext:", plainText);
+  
+// Prints encrypted text
+console.log("Encrypted: ", encrypted);
+
 app.get("/key", async (req, res) => {
 
   crypto.generateKeyPair('rsa', {
@@ -62,8 +85,8 @@ app.get("/key", async (req, res) => {
       console.log();
       console.log("Private Key is: ", privateKey);
 
-      fs.writeFileSync("public.pem", Buffer.from(publicKey));
-      fs.writeFileSync("private.pem", Buffer.from(privateKey));
+      fs.writeFileSync("publics", Buffer.from(publicKey));
+      fs.writeFileSync("privates", Buffer.from(privateKey));
     }
     else {
       // Prints error
