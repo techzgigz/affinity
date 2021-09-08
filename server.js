@@ -6,6 +6,8 @@ const dbConfig = require("./app/config/db.config");
 const app = express();
 const crypto = require("crypto");
 const fs = require('fs');
+const { generateKeyPair } = require("./app/key/index");
+
 var corsOptions = {
   origin: "http://localhost:5000"
 };
@@ -37,65 +39,40 @@ db.mongoose
 
 // simple route
 app.get("/", async (req, res) => {
-
   res.json({ message: "Welcome to Affinity application." });
 });
+// console.log(generateKeyPair)
+// // Creating a function to encrypt string
+// function encryptString (plaintext, publicKeyFile) {
+//   const publicKey = fs.readFileSync(publicKeyFile, "utf8");
 
-// Creating a function to encrypt string
-function encryptString (plaintext, publicKeyFile) {
-  const publicKey = fs.readFileSync(publicKeyFile, "utf8");
+//   // publicEncrypt() method with its parameters
+//   const encrypted = crypto.publicEncrypt(
+//        publicKey, Buffer.from(plaintext));
+//   return encrypted.toString("base64");
+// }
 
-  // publicEncrypt() method with its parameters
-  const encrypted = crypto.publicEncrypt(
-       publicKey, Buffer.from(plaintext));
-  return encrypted.toString("base64");
-}
+// //encryptString()
+// const plainText = "{GfG}";
 
-//encryptString()
-const plainText = "{GfG}";
-  
-// Defining encrypted text
-const encrypted = encryptString(plainText, "publics");
-  
-// Prints plain text
-console.log("Plaintext:", plainText);
-  
-// Prints encrypted text
-console.log("Encrypted: ", encrypted);
+// // Defining encrypted text
+// const encrypted = encryptString(plainText, "publics");
+
+// // Prints plain text
+// console.log("Plaintext:", plainText);
+
+// // Prints encrypted text
+// console.log("Encrypted: ", encrypted);
 
 app.get("/key", async (req, res) => {
-
-  crypto.generateKeyPair('rsa', {
-    modulusLength: 4096,    // options
-    publicExponent: 0x10101,
-    publicKeyEncoding: {
-      type: 'pkcs1',
-      format: 'pem'
-    },
-    privateKeyEncoding: {
-      type: 'pkcs8',
-      format: 'pem',
-      cipher: 'aes-192-cbc',
-      passphrase: 'affinity'
-    }
-  }, (err, publicKey, privateKey) => { // Callback function
-    if (!err) {
-      // Prints new asymmetric key pair
-      console.log("Public Key is : ", publicKey);
-      console.log();
-      console.log("Private Key is: ", privateKey);
-
-      fs.writeFileSync("publics", Buffer.from(publicKey));
-      fs.writeFileSync("privates", Buffer.from(privateKey));
-    }
-    else {
-      // Prints error
-      console.log("Errr is: ", err);
-    }
-
-  });
-
-  res.json({ message: "Welcome to Affinity application." });
+  try {
+    const KeyPair = await generateKeyPair(req, res);
+  }
+  catch (e) {
+    res.status(400).send({ message: e });
+  }
+  // console.log(KeyPair)
+  //res.json({ message: "Welcome to Affinity application." + KeyPair });
 });
 
 
