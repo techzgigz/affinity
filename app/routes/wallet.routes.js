@@ -13,4 +13,7 @@ module.exports = function(app) {
   app.post("/api/wallet/all", [authJwt.verifyToken], controller.allWallet);
 
   app.post("/api/wallet/insert", [authJwt.verifyToken], controller.insertWallet);
+
+  app.post("/api/walletID", [authJwt.verifyToken], controller.getByIDWallet);
+
 };

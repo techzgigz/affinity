@@ -1,45 +1,29 @@
 const crypto = require("crypto");
 const fs = require('fs');
 
-export default async function generateKeyPair() {
-    try {
-        const keyPair = await crypto.generateKeyPair('rsa', {
-            modulusLength: 4096,    // options
-            publicExponent: 0x10101,
-            publicKeyEncoding: {
-                type: 'pkcs1',
-                format: 'pem'
-            },
-            privateKeyEncoding: {
-                type: 'pkcs8',
-                format: 'pem',
-                cipher: 'aes-192-cbc',
-                passphrase: 'affinity'
-            }
-        });
-        if (keyPair) {
-            // Prints new asymmetric key pair
-            console.log("Public Key is : ", publicKey);
-            console.log();
-            console.log("Private Key is: ", privateKey);
-
-            fs.writeFileSync("./publics", Buffer.from(publicKey));
-            fs.writeFileSync("./privates", Buffer.from(privateKey));
-            return true
-        }
-        else {
-            // Prints error
-            console.log("Errr is: ");
-            return false
-        }
-    }
-    catch (e) {
-
-        // Prints error
-        console.log("Errr is: ", err);
-        return false
-    }
+exports.encryptString = async (req, res, publicKeyFile, data) => {
+    const publicKey = fs.readFileSync(publicKeyFile, "utf8");
+  
+    // publicEncrypt() method with its parameters
+    const encrypted = crypto.publicEncrypt(
+         publicKey, Buffer.from(data));
+    const encryptString= encrypted.toString("base64");
+    return encryptString;
+}
 
 
-
+exports.decryptString = async (req, res, privateKeyFile, data) => {
+    const privateKey = fs.readFileSync(privateKeyFile, "utf8");
+  
+    // publicEncrypt() method with its parameters
+    const decrypted = crypto.privateDecrypt(
+        {
+          key: privateKey,
+          passphrase: 'affinity',
+        },
+        Buffer.from(data, "base64")
+      );
+    
+    const decryptedString = decrypted.toString("utf8");
+    return decryptedString;
 }

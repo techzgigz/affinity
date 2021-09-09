@@ -7,7 +7,7 @@ const app = express();
 const crypto = require("crypto");
 const fs = require('fs');
 const { generateKeyPair } = require("./app/key/index");
-
+const { encryptString,decryptString } = require("./app/dataParse/index");
 var corsOptions = {
   origin: "http://localhost:5000"
 };
@@ -76,8 +76,24 @@ app.get("/key", async (req, res) => {
 });
 
 
-// console.log(publicKey,privateKey)
 
+app.get("/engy", async (req, res) => {
+  try {
+    const KeyPair = await encryptString(req, res,"./public","test");
+  }
+  catch (e) {
+    res.status(400).send({ message: e });
+  } 
+});
+
+app.get("/dngy", async (req, res) => {
+  try {
+    const KeyPair = await decryptString(req, res,"./private","i+swG6xYCVb6fK11YGWMCaRQlb/Byh0ZYn8ancWab6GZJUK+PWFlOO7WF0T9554PYgjDmbDE3mxiZLew8NbmvIKWrDzAP1JI9JR3v1mGB1/UrFy3NtoRd+/52TrqCBbsalmOXgOpkuJxNeA9JrCnFsCYrQYTNluzyR9yWOec8vs4fb01EhwvlivS8NAHfdPoP8jGhMFQAHorhKZxcKZBUTdxe31P4p0iBzIhyMrf/GV7hBTJipoO6lFYM437XF7BVOAP/k5tqfH493DS5m7Wpf9hBq6xnEPA6TF6LMiNAOmrN7O7xC9XZJilpHo6AlTx3SEi+nrDccHzbRjEj7nS8WNE07LZ0cikPkMGyLOBeD1PzhyfSklTH0cjQm4gEp2ssbSHjKRnijEh2YUD3TYFe9Nkqy07w+eTiCft67ITjbcMg3ScunUdoOIE42JKUh0e7qJ/ptpjAk/HU3+0AZDC8kwcTVplsNQ5oQrspC7w1xmbYTBo9oCJLarEdbdH7kmmZxZQf2OuGF4nJGMBlTkWGd+UPBlovven9wChdK0qhVsxIceGy4NwXhIoDtMesKaubZj4TtvvjZKfiBRDFd1meAwNXxYX7k4bDfxGnOwroCyvbDAx5nZSXFix/qNGVrrqnkhkSbhy/oczqsn7W4lFkaYq8LmrvXfE9pvgrxowpRM=");
+  }
+  catch (e) {
+    res.status(400).send({ message: e });
+  } 
+});
 
 require("./app/routes/auth.routes")(app);
 require("./app/routes/wallet.routes")(app);
