@@ -7,5 +7,5 @@ db.mongoose = mongoose;
 
 db.user = require("./user.model");
 db.wallet = require("./wallet.model");
-
+db.key = require("./key.model");
 module.exports = db;

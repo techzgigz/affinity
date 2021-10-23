@@ -3,8 +3,12 @@ const db = require("../models");
 const User = db.user;
 // const Role = db.role;
 
+
+const key = db.key;
 var jwt = require("jsonwebtoken");
 var bcrypt = require("bcryptjs");
+const didJWT = require('did-jwt')
+const signer = didJWT.ES256KSigner(process.env.SIGN)
 
 exports.signup = (req, res) => {
   const user = new User({
@@ -28,7 +32,7 @@ exports.signin = (req, res) => {
     username: req.body.username
   })
   
-    .exec((err, user) => {
+    .exec( async (err, user) => {
       if (err) {
         res.status(500).send({ message: err });
         return;
@@ -54,14 +58,15 @@ exports.signin = (req, res) => {
         expiresIn: 86400 // 24 hours
       });
 
-      var authorities = [];
+      // var authorities = [];
 
-      
+      const keys= await key.find({ userid: user._id }).exec()
       res.status(200).send({
         id: user._id,
         username: user.username,
         email: user.email,
-        accessToken: token
+        accessToken: token,
+        key:keys && keys[keys.length-1].public
       });
     });
 };

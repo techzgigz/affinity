@@ -1,0 +1,12 @@
+1. JWT Login with secret : FavAvtar (Dont share) we generate token for valid user (cloud Issue & get & Cloud allow some url to get it Keyvault)
+2. Token this is valid user id DIDS
+3. We genes public & private (user basic)
+4. The DOcuments will encoded with public 
+5. Store in cloud
+6. To get DOcuments nned privta key & show 
+7. DIDs dicsuss //issue - compnay / verify map did -> documents  // private (send code) // en 2 //de 4 
+ 
+Web Login 
+Web Showing DOcuments with id 
+
+Resolver Web .
